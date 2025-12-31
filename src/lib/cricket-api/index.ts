@@ -14,6 +14,17 @@ export * from './types';
 export * from './provider';
 export { CACHE_TTL, apiCache, cacheKey, withCache } from './cache';
 
+// Export DB-backed cache functions (recommended for production)
+export {
+  getTournamentsCached,
+  getMatchesCached,
+  getPlayersCached,
+  getLiveScoreCached,
+  forceRefreshTournaments,
+  forceRefreshMatches,
+  forceRefreshPlayers,
+} from './db-cache';
+
 // Export providers
 export { CricketDataProvider } from './cricketdata';
 export { MockCricketProvider } from './mock';
