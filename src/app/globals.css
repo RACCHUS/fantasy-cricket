@@ -1,0 +1,147 @@
+@import "tailwindcss";
+
+/* ============================================
+   THEME SYSTEM - Dark Mode Default
+   ============================================ */
+
+/* Light mode (for users who prefer it) */
+:root {
+  --background: #ffffff;
+  --background-secondary: #f4f4f5;
+  --background-tertiary: #e4e4e7;
+  --foreground: #09090b;
+  --foreground-muted: #71717a;
+  --border: #e4e4e7;
+  --card: #ffffff;
+  --ring: #3b82f6;
+}
+
+/* Dark mode (default) */
+.dark {
+  --background: #0a0a0f;
+  --background-secondary: #111118;
+  --background-tertiary: #1a1a24;
+  --foreground: #f4f4f5;
+  --foreground-muted: #a1a1aa;
+  --border: #27272a;
+  --card: #111118;
+  --ring: #3b82f6;
+}
+
+/* Accent colors (same for both themes) */
+:root, .dark {
+  --primary: #3b82f6;
+  --primary-hover: #2563eb;
+  --success: #22c55e;
+  --success-hover: #16a34a;
+  --warning: #fbbf24;
+  --warning-hover: #f59e0b;
+  --danger: #ef4444;
+  --danger-hover: #dc2626;
+  --accent: #ec4899;
+  --accent-hover: #db2777;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-background-secondary: var(--background-secondary);
+  --color-background-tertiary: var(--background-tertiary);
+  --color-foreground: var(--foreground);
+  --color-foreground-muted: var(--foreground-muted);
+  --color-border: var(--border);
+  --color-card: var(--card);
+  --color-ring: var(--ring);
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-success: var(--success);
+  --color-success-hover: var(--success-hover);
+  --color-warning: var(--warning);
+  --color-warning-hover: var(--warning-hover);
+  --color-danger: var(--danger);
+  --color-danger-hover: var(--danger-hover);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+}
+
+/* ============================================
+   ANIMATIONS - Lightweight CSS only
+   ============================================ */
+
+/* Card tap effect */
+.card-tap {
+  transition: transform 0.1s ease;
+}
+.card-tap:active {
+  transform: scale(0.97);
+}
+
+/* Button press */
+.btn-press {
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+.btn-press:active {
+  transform: scale(0.95);
+}
+
+/* Points pop animation */
+@keyframes points-pop {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.3); }
+  100% { transform: translateY(-20px); opacity: 0; }
+}
+.animate-points-pop {
+  animation: points-pop 0.6s ease-out forwards;
+}
+
+/* Live pulse indicator */
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+.animate-live-pulse {
+  animation: pulse 2s infinite;
+}
+
+/* Shake for errors */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+.animate-shake {
+  animation: shake 0.3s ease;
+}
+
+/* Slide in from bottom */
+@keyframes slide-up {
+  from { transform: translateY(10px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+.animate-slide-up {
+  animation: slide-up 0.2s ease-out;
+}
+
+/* Skeleton shimmer */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--background-secondary) 25%,
+    var(--background-tertiary) 50%,
+    var(--background-secondary) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
