@@ -4,32 +4,20 @@ import Link from 'next/link';
 import { Trophy, Users, Zap } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
-import { ThemeToggle } from '@/components/ui/ThemeToggle';
+import { LiveTournaments } from '@/components/home/LiveTournaments';
+import { FeaturedTournaments } from '@/components/home/FeaturedTournaments';
+import { AppHeader, useAuth } from '@/components/layout/AppHeader';
 
 export default function Home() {
+  const { user, loading } = useAuth();
+  
   return (
     <div className="min-h-screen">
-      {/* Header */}
-      <header className="fixed top-0 left-0 right-0 z-50 border-b border-border bg-background/80 backdrop-blur-sm">
-        <div className="container mx-auto flex h-16 items-center justify-between px-4">
-          <div className="flex items-center gap-2">
-            <span className="text-2xl">🏏</span>
-            <span className="font-bold text-xl">Fantasy Cricket</span>
-          </div>
-          <div className="flex items-center gap-4">
-            <ThemeToggle />
-            <Link href="/login">
-              <Button variant="ghost" size="sm">Log in</Button>
-            </Link>
-            <Link href="/register">
-              <Button size="sm">Sign up</Button>
-            </Link>
-          </div>
-        </div>
-      </header>
+      {/* Shared Auth-Aware Header */}
+      <AppHeader variant="transparent" />
 
       {/* Hero Section */}
-      <section className="container mx-auto px-4 pt-32 pb-20 text-center">
+      <section className="container mx-auto px-4 pt-32 pb-12 text-center">
         <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 text-primary mb-6">
           <Zap className="h-4 w-4" />
           <span className="text-sm font-medium">Live fantasy cricket</span>
@@ -46,21 +34,46 @@ export default function Home() {
         </p>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-          <Link href="/register">
-            <Button size="lg" className="text-lg px-8">
-              Get Started Free
-            </Button>
-          </Link>
-          <Link href="/contests">
-            <Button variant="secondary" size="lg" className="text-lg px-8">
-              View Contests
-            </Button>
-          </Link>
+          {!loading && user ? (
+            // Logged in - show dashboard and tournaments
+            <>
+              <Link href="/dashboard">
+                <Button size="lg" className="text-lg px-8">
+                  Go to Dashboard
+                </Button>
+              </Link>
+              <Link href="/tournaments">
+                <Button variant="secondary" size="lg" className="text-lg px-8">
+                  Browse Tournaments
+                </Button>
+              </Link>
+            </>
+          ) : (
+            // Logged out - show signup and contests
+            <>
+              <Link href="/register">
+                <Button size="lg" className="text-lg px-8">
+                  Get Started Free
+                </Button>
+              </Link>
+              <Link href="/contests">
+                <Button variant="secondary" size="lg" className="text-lg px-8">
+                  View Contests
+                </Button>
+              </Link>
+            </>
+          )}
         </div>
       </section>
 
+      {/* Featured Major Tournaments - IPL, World Cups, etc. */}
+      <FeaturedTournaments />
+
+      {/* Live & Upcoming Tournaments */}
+      <LiveTournaments />
+
       {/* Features */}
-      <section className="container mx-auto px-4 py-20">
+      <section className="container mx-auto px-4 py-16 border-t border-border">
         <h2 className="text-2xl md:text-3xl font-bold text-center mb-12">
           Why Fantasy Cricket?
         </h2>
@@ -98,22 +111,24 @@ export default function Home() {
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="container mx-auto px-4 py-20">
-        <Card className="bg-gradient-to-r from-primary/20 to-accent/20 border-primary/30 text-center p-8 md:p-12">
-          <h2 className="text-2xl md:text-3xl font-bold mb-4">
-            Ready to play?
-          </h2>
-          <p className="text-foreground-muted mb-6 max-w-lg mx-auto">
-            Create your account in seconds and start building your fantasy team today.
-          </p>
-          <Link href="/register">
-            <Button size="lg" className="text-lg px-8">
-              Create Free Account
-            </Button>
-          </Link>
-        </Card>
-      </section>
+      {/* CTA - Only show for logged out users */}
+      {!loading && !user && (
+        <section className="container mx-auto px-4 py-20">
+          <Card className="bg-gradient-to-r from-primary/20 to-accent/20 border-primary/30 text-center p-8 md:p-12">
+            <h2 className="text-2xl md:text-3xl font-bold mb-4">
+              Ready to play?
+            </h2>
+            <p className="text-foreground-muted mb-6 max-w-lg mx-auto">
+              Create your account in seconds and start building your fantasy team today.
+            </p>
+            <Link href="/register">
+              <Button size="lg" className="text-lg px-8">
+                Create Free Account
+              </Button>
+            </Link>
+          </Card>
+        </section>
+      )}
 
       {/* Footer */}
       <footer className="border-t border-border py-8">

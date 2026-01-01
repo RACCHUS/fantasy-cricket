@@ -78,7 +78,10 @@ export interface LiveMatchData {
 
 interface UseLiveMatchOptions {
   matchId: string;
-  /** Polling interval in seconds (default: 10 for live, 60 for upcoming) */
+  /** Polling interval in seconds (default: 3600 = 1 hour)
+   * IMPORTANT: CricketData.org has 100 requests/day limit!
+   * For a 3-hour match: 3 requests
+   */
   pollInterval?: number;
   /** Enable polling */
   enabled?: boolean;
@@ -108,7 +111,7 @@ export function useLiveMatch(
     ? { matchId: matchIdOrOptions } 
     : matchIdOrOptions;
   
-  const { matchId, pollInterval = 10, enabled = true } = options;
+  const { matchId, pollInterval = 3600, enabled = true } = options; // 1 hour (API limit: 100/day)
   
   const [data, setData] = useState<LiveMatchData | null>(null);
   const [isLoading, setIsLoading] = useState(true);

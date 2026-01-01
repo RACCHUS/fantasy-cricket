@@ -17,7 +17,8 @@ export async function GET(request: NextRequest) {
     
     return NextResponse.json(matches, {
       headers: {
-        'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300',
+        // Cache for 15 minutes (API limit: 100/day)
+        'Cache-Control': 'public, s-maxage=900, stale-while-revalidate=1800',
       },
     });
   } catch (error) {

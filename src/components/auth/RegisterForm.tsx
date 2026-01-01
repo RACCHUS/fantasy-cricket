@@ -83,31 +83,6 @@ export function RegisterForm() {
 
   return (
     <div className="space-y-6">
-      {/* Google Sign Up */}
-      <Button
-        type="button"
-        variant="secondary"
-        className="w-full"
-        onClick={handleGoogleSignup}
-        loading={googleLoading}
-        disabled={loading}
-      >
-        <GoogleIcon className="mr-2 h-5 w-5" />
-        Continue with Google
-      </Button>
-
-      {/* Divider */}
-      <div className="relative">
-        <div className="absolute inset-0 flex items-center">
-          <span className="w-full border-t border-border" />
-        </div>
-        <div className="relative flex justify-center text-xs uppercase">
-          <span className="bg-background px-2 text-foreground-muted">
-            Or continue with email
-          </span>
-        </div>
-      </div>
-
       {/* Email/Password Form */}
       <form onSubmit={handleEmailRegister} className="space-y-4">
         <div className="space-y-2">
@@ -164,6 +139,31 @@ export function RegisterForm() {
           Create account
         </Button>
       </form>
+
+      {/* Divider */}
+      <div className="relative">
+        <div className="absolute inset-0 flex items-center">
+          <span className="w-full border-t border-border" />
+        </div>
+        <div className="relative flex justify-center text-xs uppercase">
+          <span className="bg-background px-2 text-foreground-muted">
+            Or
+          </span>
+        </div>
+      </div>
+
+      {/* Google Sign Up */}
+      <Button
+        type="button"
+        variant="secondary"
+        className="w-full"
+        onClick={handleGoogleSignup}
+        loading={googleLoading}
+        disabled={loading}
+      >
+        <GoogleIcon className="mr-2 h-5 w-5" />
+        Continue with Google
+      </Button>
     </div>
   );
 }

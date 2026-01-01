@@ -28,7 +28,9 @@ interface LivePointsData {
 interface UseLivePointsOptions {
   matchId: string;
   fantasyTeamId?: string;
-  /** Polling interval in seconds (default: 30) */
+  /** Polling interval in seconds (default: 120 = 2 minutes)
+   * This polls our internal API, not the external cricket API
+   */
   pollInterval?: number;
   /** Enable polling only when match is live */
   pollOnlyWhenLive?: boolean;
@@ -60,12 +62,15 @@ interface UseLivePointsReturn {
 /**
  * Hook to fetch and poll for live fantasy points
  * 
+ * Note: This polls our internal /api/scoring/live endpoint (database),
+ * not the external cricket API, so it's safe to poll more frequently.
+ * 
  * @example
  * ```tsx
  * const { data, isLoading, startPolling } = useLivePoints({
  *   matchId: 'match-123',
  *   fantasyTeamId: 'team-456',
- *   pollInterval: 30,
+ *   pollInterval: 120, // 2 minutes (default)
  * });
  * 
  * useEffect(() => {
@@ -76,7 +81,7 @@ interface UseLivePointsReturn {
 export function useLivePoints({
   matchId,
   fantasyTeamId,
-  pollInterval = 30,
+  pollInterval = 120, // 2 minutes (internal API, not external)
   pollOnlyWhenLive = true,
   enabled = true,
 }: UseLivePointsOptions): UseLivePointsReturn {

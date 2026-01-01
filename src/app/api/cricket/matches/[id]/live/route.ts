@@ -29,8 +29,8 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
       },
       {
         headers: {
-          // Short cache for live data
-          'Cache-Control': 'public, s-maxage=30, stale-while-revalidate=60',
+          // Cache for 1 hour (API limit: 100/day)
+          'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=7200',
         },
       }
     );

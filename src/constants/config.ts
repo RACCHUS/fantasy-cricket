@@ -22,10 +22,14 @@ export const CACHE_TTL = {
 
 /**
  * Polling intervals (in milliseconds)
+ * IMPORTANT: CricketData.org API has 100 requests/day limit!
+ * For a 3-hour match with 1-hour polling = 3 requests
+ * This leaves room for ~95+ other requests per day
  */
 export const POLLING_INTERVALS = {
-  LIVE_MATCH: 60 * 1000,        // 1 minute
-  LEADERBOARD: 5 * 60 * 1000,   // 5 minutes
+  LIVE_MATCH: 60 * 60 * 1000,   // 1 hour (API limit!)
+  LEADERBOARD: 15 * 60 * 1000,  // 15 minutes
+  MATCH_STATUS: 60 * 60 * 1000, // 1 hour for checking if match started
 } as const;
 
 /**

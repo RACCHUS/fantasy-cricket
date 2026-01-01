@@ -6,15 +6,17 @@
 import type { CacheEntry } from './types';
 
 // Cache TTL values in seconds
+// IMPORTANT: CricketData.org API has 100 requests/day limit!
+// These values are optimized to stay well within that limit
 export const CACHE_TTL = {
-  TOURNAMENTS: 24 * 60 * 60,      // 24 hours
-  TOURNAMENT_DETAILS: 6 * 60 * 60, // 6 hours
-  MATCHES_LIST: 60 * 60,          // 1 hour
-  MATCH_DETAILS: 30 * 60,         // 30 minutes
-  LIVE_SCORE: 30,                 // 30 seconds
+  TOURNAMENTS: 12 * 60 * 60,      // 12 hours (check 2x per day)
+  TOURNAMENT_DETAILS: 12 * 60 * 60, // 12 hours
+  MATCHES_LIST: 12 * 60 * 60,     // 12 hours
+  MATCH_DETAILS: 60 * 60,         // 1 hour
+  LIVE_SCORE: 60 * 60,            // 1 hour (API limit!)
   PLAYERS_LIST: 24 * 60 * 60,     // 24 hours
-  PLAYER_DETAILS: 6 * 60 * 60,    // 6 hours
-  PLAYER_STATS: 5 * 60,           // 5 minutes
+  PLAYER_DETAILS: 12 * 60 * 60,   // 12 hours
+  PLAYER_STATS: 60 * 60,          // 1 hour
   TEAMS: 24 * 60 * 60,            // 24 hours
 } as const;
 

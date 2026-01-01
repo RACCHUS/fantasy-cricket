@@ -107,18 +107,22 @@ export class CricketDataProvider extends BaseCricketAPIProvider {
     );
     
     return withCache(key, CACHE_TTL.MATCHES_LIST, async () => {
-      let endpoint = '/matches';
-      const params: string[] = [];
+      let matchesData: CricketDataMatch[] = [];
       
       if (options?.tournamentId) {
-        endpoint = '/series_info';
-        params.push(`id=${options.tournamentId}`);
+        // Fetch series info which includes matches
+        const response = await this.fetch<CricketDataSeriesInfoResponse>(
+          `/series_info?id=${options.tournamentId}`
+        );
+        // API returns matchList (not matches) for series_info
+        matchesData = response.data?.matchList || response.data?.matches || [];
+      } else {
+        // Fetch all matches
+        const response = await this.fetch<CricketDataMatchesResponse>('/matches');
+        matchesData = response.data || [];
       }
       
-      const query = params.length > 0 ? `?${params.join('&')}` : '';
-      const response = await this.fetch<CricketDataMatchesResponse>(endpoint + query);
-      
-      const matches = this.mapMatches(response.data || []);
+      const matches = this.mapMatches(matchesData);
       
       // Filter by status if specified
       const filtered = options?.status
@@ -547,6 +551,7 @@ interface CricketDataSeries {
   startDate?: string;
   endDate?: string;
   matches?: CricketDataMatch[];
+  matchList?: CricketDataMatch[]; // API returns matchList for series_info
 }
 
 interface CricketDataMatch {
